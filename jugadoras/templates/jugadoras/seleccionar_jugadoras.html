@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="row">
+    <!-- Formulario de Filtros -->
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h2>Filtros</h2>
+            </div>
+            <div class="card-body">
+                <form method="post" action="{% url 'seleccionar_jugadoras' %}">
+                    {% csrf_token %}
+                    {{ filtro_form.as_p }}
+                    <button type="submit" class="btn btn-secondary" name="aplicar_filtro">Aplicar Filtro</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Formulario de Selección -->
+{% if seleccion_form.jugadoras.field.queryset %}
+    <div class="card mt-4">
+        <div class="card-header">
+            <h2>Selección de Jugadoras</h2>
+        </div>
+        <div class="card-body">
+            <form method="post" action="{% url 'seleccionar_jugadoras' %}">
+                {% csrf_token %}
+                
+                {# Mantener los valores del filtro #}
+                
+{% comment %}               
+                <input type="hidden" name="filtro_ano" value="{{ filtro_form.ano.value|default:'' }}">
+                <input type="hidden" name="filtro_categoria" value="{{ filtro_form.categoria.value|default:'' }}"> {% endcomment %}
+                
+                
+                {% if seleccion_form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {% for error in seleccion_form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                {% for field in seleccion_form %}
+                    {% if field.name != 'jugadoras' and field.name%}
+                        <div class="form-group mb-3">
+                            {{ field.label_tag }}
+                            {{ field|attr:"class:form-control" }}
+                           
+                            {% if field.errors %}
+                            <div class="alert alert-danger mt-1">
+                                {% for error in field.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                
+
+                <div class="form-group mb-3">
+                    <label class="form-label">Seleccionar Jugadoras</label>
+                    <div class="jugadoras-checklist">
+                        {% for jugadora in seleccion_form.jugadoras.field.queryset %}
+                        <div class="jugadora-item">
+                            <input type="checkbox" 
+                                   name="jugadoras" 
+                                   value="{{ jugadora.id }}" 
+                                   id="jugadora_{{ jugadora.id }}"
+                                   class="form-check-input"
+                                   {% if jugadora.id in seleccion_form.jugadoras.value %}checked{% endif %}>
+                            <label for="jugadora_{{ jugadora.id }}" class="form-check-label">
+                                {{ jugadora.jugadora.apellido }} {{ jugadora.jugadora.nombre }} - Año: {{ jugadora.jugadora.fecha_nacimiento|date:"Y" }} - {{ jugadora.division }}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div> 
+             
+                    <button type="submit" class="btn btn-success" name="guardar_seleccion" >Guardar Selección</button>
+                </form>
+            </form>
+        </div>
+    </div>
+{% endif %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

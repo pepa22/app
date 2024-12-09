@@ -1,0 +1,41 @@
+.jugadoras-checklist {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+.jugadora-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    border-bottom: 1px solid #eee;
+}
+.jugadora-item:last-child {
+    border-bottom: none;
+}
+.jugadora-item input[type="checkbox"] {
+    margin-right: 1rem;
+    width: 20px;
+    height: 20px;
+}
+.jugadora-item label {
+    margin-bottom: 0;
+    font-size: 1rem;
+    cursor: pointer;
+}
+.navbar-brand img {
+    height: 40px;
+}
+
+.footer {
+    background-color: #f8f9fa;
+    padding: 1rem 0;
+    margin-top: 2rem;
+}
+
+.content-wrapper {
+    min-height: calc(100vh - 160px);
+    padding: 20px 0;
+}

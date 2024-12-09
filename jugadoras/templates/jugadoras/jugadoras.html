@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jugadoras - {{ categoria }} - {{ ano }}</title>
+</head>
+<body>
+    <h1>Jugadoras en {{ categoria }} - {{ ano }}</h1>
+    
+    <ul>
+        {% for jugadora in jugadoras %}
+            <li>{{ jugadora.jugadora.nombre }} - 
+                División: {{ jugadora.division.nombre }} - 
+                Fecha de nacimiento: {{ jugadora.jugadora.fecha_nacimiento }} - 
+                categoria: {{jugadora.categoria }}</li>
+        {% empty %}
+            <li>No hay jugadoras en esta categoría para este año.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

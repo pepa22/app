@@ -1,0 +1,69 @@
+usuario pucara
+pass pucara
+
+corer el script
+exec(open('Actualizar_BD.py').read())
+
+errores en la tabal de mati
+
+   CATEGORIA DIVISION           NOMBRE APELLIDO         DNI       FECHA  NUM_SOC ACTIVAS  Un
+52        10        P           Visser   Bianca  56044247.0  22/11/2016        0      si         
+45        10        P        Rodriguez    Lucia  56044247.0   21/2/2017        0      si          
+43        10        P          Peralta   Amelia  56808063.0   15/9/2017    16078      si         
+30        10        P  Gonzalez Abrech     Emma  56808063.0  21/12/2017    16388 
+
+CATEGORIA   DIVISION              NOMBRE        APELLIDO         DNI       FECHA  NUM_SOC ACTIVAS  
+0    escuelita  escuelita    PARADELA RUIDIAZ          MALENA  56708061.0    9/2/2018        0      si                               
+1    escuelita  escuelita       MORALES RUIZ       INES JUANA  57819421.0    4/7/2019        0      si           
+6    escuelita  escuelita              SAULLE    EMILIA CLARA  57211821.0    3/6/2018        0      si         NaN         NaN          NaN          NaN      
+12   escuelita  escuelita            Gambetta          EMILIA  57472157.0  17/12/2018        0      si         NaN         NaN          NaN          NaN      
+14   escuelita  escuelita         Tato Pompey            Lupe  57655256.0    8/5/2019        0      si         NaN         NaN          NaN          NaN      
+13   escuelita  escuelita               Murua      Isabella    57646717.0   26/3/2019        0      si         NaN         NaN          NaN          NaN      
+15   escuelita  escuelita           Gil Saenz        Joaquina         NaN   25/4/2018        0      si         NaN         NaN          NaN          NaN      
+16   escuelita  escuelita     Ledesma Maitena         Maitena  57470267.0    9/1/2019        0      si         NaN         NaN          NaN          NaN      
+28          10          P             Gallozo           Juana         NaN   29/3/2017        0      si         NaN         NaN          NaN          NaN      
+17   escuelita  escuelita     Martinez Zurita          Sienna  57167382.0   11/7/2018        0      si         NaN         NaN          NaN          NaN      
+23          10          P                Diaz         Maitena  56195171.0   20/3/2017        0      si         NaN         NaN          NaN          NaN      
+27          10          P           Espindola         Delfina  55867694.0   1/10/2016        0      si         NaN         NaN          NaN          NaN      
+31          10          P            Guardati            Gina  56071287.0  21/12/2016        0      si         NaN         NaN          NaN          NaN      
+29          10          P      Garcia Navarro           Juana  55727797.0   19/8/2016        0      si         NaN         NaN          NaN          NaN      
+32          10          P      Guerrero Rojas           Elena  56583971.0  12/10/2017        0      si         NaN         NaN          NaN          NaN      
+34          10          P             Jimenez             Sol         NaN  20/10/2017        0      si         NaN         NaN          NaN          NaN      
+45          10          P           Rodriguez           Lucia         NaN   21/2/2017        0      si         NaN         NaN          NaN          NaN      
+35          10          P               Jones          Olivia  55148945.0    9/1/2016        0      si         NaN         NaN          NaN          NaN      
+37          10          P             Lymardo         Brunela         NaN  20/10/2017        0      si         NaN         NaN          NaN          NaN      
+38          10          P               Matto        Josefina  56501742.0   19/8/2017        0      si         NaN         NaN          NaN          NaN      
+39          10          P            Mercatti        Isabella  56344046.0   21/8/2017        0      si         NaN         NaN          NaN          NaN      
+40          10          P             Nicolau           Elena  56070108.0  20/12/2016        0      si         NaN         NaN          NaN          NaN      
+41          10          P             Nicolau        Victoria  56070109.0  20/12/2016        0      si         NaN         NaN          NaN          NaN      
+44          10          P               Peron         Martina  56043926.0   10/1/2017        0      si         NaN         NaN          NaN          NaN      
+87           9          P              JUAREZ            EMMA  53676544.0    7/2/2014        0      si         NaN         NaN          NaN          NaN      
+52          10          P              Visser          Bianca         NaN  22/11/2016        0      si         NaN         NaN          NaN          NaN      
+86           9          P  HERNANDEZ GOLDSMAN        VICTORIA  54427518.0    7/1/2015        0      si         NaN         NaN          NaN          NaN      
+82           9          P        AGNESE LOPEZ            NINA  54797888.0   27/5/2015        0      si         NaN         NaN          NaN          NaN      
+89           9          P               LOPEZ         CANDELA  54216637.0   12/8/2014        0      si         NaN         NaN          NaN          NaN      
+92           9          P     CARNEVALE BAVIO          OLIVIA  54381048.0  20/11/2014        0      si         NaN         NaN          NaN          NaN      
+91           9          P               OJEDA        FRACESCA  54214207.0   28/7/2014        0      si         NaN         NaN          NaN          NaN      
+90           9          P             SALOMON       VALENTINA         NaN   24/9/2015        0      si         NaN         NaN          NaN          NaN      
+523         PS    Segunda             FAZZARI           JUANA         NaN         NaN        0      si         NaN         NaN          NaN          NaN      
+369          5          D  CAVALLERO MARTINEZ        ISABELLA  47629612.0    4/9/2006        0      si         NaN         NaN          NaN          NaN      
+522         PS    Segunda              MURADO         DENISSE         NaN         NaN        0      si         NaN         NaN          NaN          NaN      
+119          8          B              HAUCHE            LOLA         NaN        2013        0      si         NaN         NaN          NaN          NaN      
+286          6          B               DURAN             EVA         NaN         NaN        0      si         NaN         NaN          NaN          NaN      
+511         PS    Segunda           CITARELLA        Milagros  40430608.0   17/4/1997        0      si         NaN         NaN          NaN          NaN      
+461        PS           C      MARTIN LLORENS        Catalina  30220419.0    6/4/1983     6874      si         NaN         NaN          NaN          NaN      
+460        PS           C              LECOUR          Marina  40622305.0   31/7/1997     6874      si         NaN         NaN          NaN          NaN      
+253          6          A      ARAUJO EZCURRA             Sol  48524774.0    9/5/2008    14283      si         NaN         NaN          NaN          NaN      
+262          6          A             ANDUJAR           Julia  49823022.0  10/10/2009    14283      si         NaN         NaN          NaN          NaN      
+51          10          P     Villamin Barrio       Albertina  56195120.0    6/3/2017    14840      si         NaN         NaN          NaN          NaN      
+118          8          B     VILLAMIL BARRIO        Joaquina  53607767.0  13/12/2013    14840      si         NaN         NaN          NaN          NaN      
+116          8          B             LEIBSON       ANA CLARA  53387065.0  10/11/2013    15770      si         NaN         NaN          NaN          NaN      
+10   escuelita  escuelita            LEIBSON             EMMA  57547431.0   11/2/2019    15770      si         NaN         NaN          NaN          NaN
+67           9          B               DEWEY           Sofia  54302245.0   29/9/2014    15950      si         NaN         NaN          NaN          NaN
+138          8          D           DE MARCHI            GAIA  52929575.0   29/1/2013    15950      si         NaN         NaN          NaN          NaN
+109          8          B              BIDART   ISABELLA INES  53410152.0    1/7/2013    15971      si         NaN         NaN          NaN          NaN
+489         PS          D            GOROSITO  MARTINA ISABEL  45495686.0   25/1/2005    15971      si         NaN         NaN          NaN          NaN
+305          6          C               VILAR        CATALINA  49875837.0  11/10/2009    16185      si         NaN         NaN          NaN          NaN
+216          7          C           ZUCCARINO        Josefina  50513442.0   24/8/2010    16185      si         NaN         NaN          NaN          NaN
+221          7          D               FERRO         Lourdes  50257975.0   19/5/2010    16439      si         NaN         NaN          NaN          NaN
+230          7          D              SCHAAB  AGUSTINA BELEN  50244778.0   13/7/2010    16439 

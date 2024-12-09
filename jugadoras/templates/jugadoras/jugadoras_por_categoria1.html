@@ -1,0 +1,173 @@
+
+    {% extends 'base.html' %}
+    {% load widget_tweaks %}
+
+    {% block content %}
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Guardar Jugadoras por Año y Categoría</h1>
+                <!-- Formulario de filtro -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <form method="get" class="row align-items-end">
+                            {% csrf_token %}
+                            <div class="col-md-4">
+                                <label for="{{ form.ano.id_for_label }}" class="form-label">{{ form.ano.label }}</label>
+                                {{ form.ano|add_class:'form-control' }}
+                            </div>
+                            <div class="col-md-4">
+                                <label for="{{ form.categoria.id_for_label }}" class="form-label">{{ form.categoria.label }}</label>
+                                {{ form.categoria|add_class:'form-control' }}
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                
+
+
+                <!-- Resultados del filtro -->
+                {% if jugadoras_filtradas %}
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Resultados</h2>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" action="{% url 'guardar_jugadoras' %}">
+                                {% csrf_token %}
+                                <div class="form-group mb-3">
+                                    <label for="nuevo_ano">Nuevo Año:</label>
+                                    <input type="number" name="nuevo_ano" id="nuevo_ano" class="form-control" required>
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table class="table table-striped"> 
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <input type="checkbox" id="seleccionar-todos" class="form-check-input">
+                                                </th>
+                                                <th>Activa</th>
+                                                <th>Apellido</th>
+                                                <th>Nombre</th>
+                                                <th>Fecha de Nacimiento</th>
+                                                <th>Categoría</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for jugadora in jugadoras_filtradas %}
+                                            <tr>
+                                                <td>
+                                                    <input type="checkbox" name="jugadoras" value="{{ jugadora.id }}" class="jugadora-checkbox form-check-input">
+                                                </td>
+                                                <td {% if not jugadora.jugadora.activa %}style="background-color: #ffcccc;"{% endif %}>{{ jugadora.jugadora.activa }}</td>
+                                                <td {% if not jugadora.jugadora.activa %}style="background-color: #ffcccc;"{% endif %}>{{ jugadora.jugadora.apellido }}</td>
+                                                <td {% if not jugadora.jugadora.activa %}style="background-color: #ffcccc;"{% endif %}>{{ jugadora.jugadora.nombre }}</td>
+                                                <td {% if not jugadora.jugadora.activa %}style="background-color: #ffcccc;"{% endif %}>{{ jugadora.jugadora.fecha_nacimiento }}</td>
+                                                <td {% if not jugadora.jugadora.activa %}style="background-color: #ffcccc;"{% endif %}>
+                                                    {% if jugadora.categoria %}
+                                                        <select name="categoria_{{ jugadora.id }}" class="categoria-select form-select">
+                                                            {% for categoria in categorias %}
+                                                                <option value="{{ categoria.id }}" {% if categoria.id == jugadora.categoria.id %}selected{% endif %}>
+                                                                    {{ categoria.nombre }}
+                                                                </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    {% else %}
+                                                        {{ jugadora.categoria.nombre }}
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button type="submit" class="btn btn-success mt-3">Guardar Selección</button>
+                            </form>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info">
+                        No se encontraron jugadoras con los criterios seleccionados.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const seleccionarTodos = document.getElementById("seleccionar-todos");
+            const checkboxes = document.querySelectorAll(".jugadora-checkbox");
+    
+            // Habilitar/deshabilitar el selector de categoría cuando se marca/desmarca el checkbox
+            checkboxes.forEach(checkbox => {
+                // Verificar si la jugadora está activa
+                const row = checkbox.closest('tr');
+                const activa = row.querySelector('td:nth-child(2)').textContent.trim() === 'True';
+    
+                // Deshabilitar el checkbox si la jugadora no está activa
+                if (!activa) {
+                    checkbox.disabled = true;
+                }
+    
+                // Evento para habilitar/deshabilitar el selector de categoría
+                checkbox.addEventListener("change", function () {
+                    const select = row.querySelector(".categoria-select");
+                    select.disabled = !this.checked;
+                    if (!this.checked) {
+                        select.value = ''; // Limpiar el valor del select si se desmarca el checkbox
+                    }
+                });
+            });
+    
+            // Manejar "Seleccionar Todos" para checkboxes activos
+            if (seleccionarTodos) {
+                seleccionarTodos.addEventListener("change", function () {
+                    checkboxes.forEach(checkbox => {
+                        if (!checkbox.disabled) { // Solo afecta a checkboxes activos
+                            checkbox.checked = seleccionarTodos.checked;
+                            const row = checkbox.closest('tr');
+                            const select = row.querySelector(".categoria-select");
+                            select.disabled = !checkbox.checked;
+                            if (!checkbox.checked) {
+                                select.value = ''; // Limpiar el valor del select si se desmarca
+                            }
+                        }
+                    });
+                });
+            }
+    
+            // Sincronizar "Seleccionar Todos" cuando se marcan/desmarcan casillas individuales
+            checkboxes.forEach(function (checkbox) {
+                checkbox.addEventListener("change", function () {
+                    const allChecked = Array.from(checkboxes).every(cb => cb.checked || cb.disabled);
+                    const someChecked = Array.from(checkboxes).some(cb => cb.checked);
+    
+                    if (allChecked) {
+                        seleccionarTodos.checked = true;
+                        seleccionarTodos.indeterminate = false; // Quitar estado indeterminado
+                    } else if (someChecked) {
+                        seleccionarTodos.checked = false;
+                        seleccionarTodos.indeterminate = true; // Mostrar estado indeterminado
+                    } else {
+                        seleccionarTodos.checked = false;
+                        seleccionarTodos.indeterminate = false; // Quitar estado indeterminado
+                    }
+                });
+            });
+    
+            // Asegurarse de que todos los selectores de categoría estén habilitados antes de enviar el formulario
+            document.querySelector("form").addEventListener("submit", function () {
+                document.querySelectorAll(".categoria-select").forEach(select => {
+                    select.disabled = false;
+                });
+            });
+        });
+    </script>
+    
+    {% endblock %}

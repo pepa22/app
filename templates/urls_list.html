@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    
+    
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3>HOCKEY PUCARA</h3>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <h5>Gestión de Jugadoras</h5>
+                    <ul>
+                        <li><a href="{% url 'jugadoras_por_categoria' %}">Jugadoras por Categoría</a></li>
+                        <li><a href="{% url 'jugadoras_por_categoria1' %}">Guardar Jugadoras por Año y  Categoría</a></li>
+                        {% comment %} <li><a href="{% url 'seleccionar_jugadoras' %}">Seleccionar Jugadoras</a></li> {% endcomment %}
+                        <li><a href="{% url 'registrar_jugadora' %}">Registrar Nueva Jugadora</a></li>
+                        <li><a href="{% url 'modificar_jugadora_categoria' %}">Modificar Jugadora por Categoría</a></li>
+                    </ul>
+                </li>
+                
+                {% comment %} <li class="list-group-item">
+                    <h5>API y Documentación</h5>
+                    <ul>
+                        <li><a href="{% url 'schema-swagger-ui' %}">Documentación Swagger</a></li>
+                        <li><a href="{% url 'schema-redoc' %}">Documentación ReDoc</a></li>
+                        <li><a href="{% url 'jugadoras_analisis-list' %}">API Análisis de Jugadoras</a></li>
+                        
+                    </ul>
+                </li> {% endcomment %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %} 

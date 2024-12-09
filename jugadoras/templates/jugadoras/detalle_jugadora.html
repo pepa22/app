@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Buscar Jugadora</h2>
+
+    <!-- Formulario de búsqueda -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <script>
+                $(document).ready(function() {
+                    console.log(typeof jQuery); // Debe devolver "function"
+                    console.log(typeof jQuery.ui); // Debe devolver "object"
+                    console.log("Autocomplete inicializado");
+                
+                    /**
+                     * Configura el autocompletado para un campo de entrada.
+                     * @param {string} inputId - ID del campo de entrada.
+                     * @param {string} field - Nombre del campo a buscar (nombre o apellido).
+                     * @param {string} suggestionsId - ID del contenedor de sugerencias.
+                     */
+                    function configurarAutocompletado(inputId, field, suggestionsId) {
+                        const input = $(inputId);
+                        const sugerencias = $(suggestionsId);
+                
+                        input.on("keyup", function() {
+                            const value = input.val().trim();
+                            
+                            if (value.length >= 2) {
+                                $.ajax({
+                                    url: "autocomplete/",
+                                    data: {
+                                        q: value,
+                                        field: field
+                                    },
+                                    success: function(data) {
+                                        sugerencias.empty();
+                                        if (data.length > 0) {
+                                            data.forEach(function(item) {
+                                                sugerencias.append(
+                                                    $("<div>")
+                                                        .addClass("sugerencia-item")
+                                                        .text(item)
+                                                        .on("click", function() {
+                                                            input.val(item);
+                                                            sugerencias.hide();
+                                                        })
+                                                );
+                                            });
+                                            sugerencias.show();
+                                        } else {
+                                            sugerencias.hide();
+                                        }
+                                    },
+                                    error: function() {
+                                        console.error("Error en la solicitud AJAX para autocompletar.");
+                                    }
+                                });
+                            } else {
+                                sugerencias.hide();
+                            }
+                        });
+                
+                        // Ocultar sugerencias cuando el campo pierde el foco
+                        input.on("blur", function() {
+                            setTimeout(function() {
+                                sugerencias.hide();
+                            }, 200); // Pequeño retraso para permitir seleccionar con clic
+                        });
+                    }
+                
+                    // Configurar autocompletado para los campos nombre y apellido
+                    configurarAutocompletado("#nombre", "nombre", "#nombreSugerencias");
+                    configurarAutocompletado("#apellido", "apellido", "#apellidoSugerencias");
+                });
+                </script>
+                
+                
+            <form method="GET" class="row g-3">
+                <div class="col-md-5">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre">
+                    <div id="nombreSugerencias" class="sugerencias"></div>
+                </div>
+                <div class="col-md-5">
+                    <label for="apellido" class="form-label">Apellido</label>
+                    <input type="text" class="form-control" id="apellido" name="apellido">
+                    <div id="apellidoSugerencias" class="sugerencias"></div>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">Buscar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Mensajes de error/éxito -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Detalles de la jugadora -->
+    {% if form %}
+        <div class="card">
+            <div class="card-header">
+                <h3>Detalles de la Jugadora</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label class="form-label">{{ field.label }}</label>
+                            {{ field.value }}
+                           
+                        </div>
+                    {% endfor %}
+                    
+                </form>
+                <h4>{{ form.historial.label }}</h4>
+                <div class="list-group">
+                    {% for historial_item in form.historial.field.queryset %}
+                        <div class="list-group-item">
+                            Año: {{ historial_item.ano }} - Categoría: {{ historial_item.categoria }} - División: {{ historial_item.division }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %} 

@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Jugadoras por Categoría{% endblock %}
+
+{% block content %}
+<style>
+    .table-container {
+        margin: 20px;
+        padding: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+    .categoria-container {
+        flex: 0 1 300px;
+        text-align: center;
+    }
+    .categoria-titulo {
+        color: red;
+        text-align: center;
+    }
+    table {
+        border: 2px solid blue;
+        border-collapse: collapse;
+    }
+    th, td {
+        border: 1px solid blue;
+        padding: 8px;
+    }
+</style>
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h1 class="text-center mb-0">Jugadoras por Categoría</h1>
+                </div>
+                <div class="card-body">
+                    <form method="GET" class="mb-3">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <label class="input-group-text" for="año">Año:</label>
+                                    <select class="form-select" id="año" name="año">
+                                        {% for año in años_disponibles %}
+                                            <option value="{{ año }}" {% if año == año_seleccionado %}selected{% endif %}>{{ año }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <button type="submit" class="btn btn-primary" onclick="if(!datos_por_categoria) document.querySelector('.table-container').innerHTML = '';">Filtrar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="table-container">
+    <div class="alert alert-info text-center mb-4" style="margin-top: 20px;">
+        <h4 class="mb-0">Total de jugadoras en {{ año_seleccionado }}:</h4>
+        <br/>
+        <h4 class="mb-0">{{ total_jugadoras_ano }}</h4>
+    </div>
+    {% for categoria in datos_por_categoria %}
+    
+    <div class="categoria-container">
+        <h2 class="categoria-titulo">Categoria: {{ categoria.categoria }}</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Grupo</th>
+                    <th>Cantidad de Jugadoras</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for jugadora in categoria.jugadoras %}
+                    <tr>
+                        <td>{{ jugadora.grupo }}</td>
+                        <td>{{ jugadora.cantidad }}</td>
+                    </tr>
+                {% endfor %}
+                <tr class="total-row">
+                    <td><strong>Total</strong></td>
+                    <td><strong>{{ categoria.total }}</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

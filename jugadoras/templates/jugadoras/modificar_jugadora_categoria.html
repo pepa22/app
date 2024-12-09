@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex align-items-center gap-3">
+            <h2>Jugadoras por División</h2>
+            <form method="GET" class="d-flex align-items-center gap-2">
+                <div class="input-group me-2">
+                    <label class="input-group-text" for="año">Año:</label>
+                    <input type="number" class="form-control" id="año" name="año" 
+                           value="{{ año_seleccionado|default:2024 }}" min="2000" max="2100">
+                </div>
+                <div class="input-group me-2">
+                    <label class="input-group-text" for="categoria">Categoría:</label>
+                    <select class="form-select" id="categoria" name="categoria" multiple>
+                        {% for categoria in categorias %}
+                            <option value="{{ categoria.nombre }}" {% if categoria.nombre == categoria_seleccionada %}selected{% endif %}>
+                                {{ categoria.nombre }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+            </form>
+            <a href="{% url 'modificar_jugadora_categoria' %}" class="btn btn-secondary">Volver</a>
+        </div>
+    </div>
+    
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% for division, jugadoras in jugadoras_por_division.items %}
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3 class="mb-0">Categoria: {{ categoria_seleccionada }} Division: {{ division }}</h3>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Apellido</th>
+                            <th>Nombre</th>
+                            <th>Fecha Nacimiento</th>
+                            <th>División</th>
+                            <th>Categoria</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for jugadora in jugadoras %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ jugadora.jugadora.apellido }}</td>
+                            <td>{{ jugadora.jugadora.nombre }}</td>
+                            <td>{{ jugadora.jugadora.fecha_nacimiento|date:"Y" }}</td>
+                            <td>
+                                <form method="post" class="d-flex gap-2">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="jugadora_id" value="{{ jugadora.id }}">
+                                    <select name="nueva_division" class="form-select form-select-sm">
+                                        {% for division in divisiones %}
+                                            <option value="{{ division.id }}" {% if jugadora.division.id == division.id %}selected{% endif %}>
+                                                {{ division.nombre }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                    <button type="submit" class="btn btn-primary btn-sm">Actualizar</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form method="post" class="d-flex gap-2">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="jugadora_id" value="{{ jugadora.id }}">
+                                    <select name="nueva_categoria" class="form-select form-select-sm">
+                                        {% for cat in categorias %}
+                                            <option value="{{ cat.id }}" {% if cat.id == jugadora.categoria.id %}selected{% endif %}>
+                                                {{ cat.nombre }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                    <button type="submit" class="btn btn-primary btn-sm">Actualizar</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="alert alert-info">
+        No hay jugadoras registradas para esta categoría y año.
+    </div>
+    {% endfor %}
+</div>
+{% endblock %} 
